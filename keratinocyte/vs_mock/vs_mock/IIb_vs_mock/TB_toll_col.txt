@@ -1,0 +1,13 @@
+keratinocytes	mock	GSM6765254
+keratinocytes	mock	GSM6765268
+keratinocytes	mock	GSM6765281
+keratinocytes	MPXV clade IIa infected	GSM6765294
+keratinocytes	MPXV clade IIa infected	GSM6765307
+keratinocytes	MPXV clade IIa infected	GSM6765321
+keratinocytes	MPXV clade IIb infected	GSM6765335
+keratinocytes	MPXV clade IIb infected	GSM6765349
+keratinocytes	MPXV clade IIb infected	GSM6765363
+keratinocytes	MPXV clade I infected	GSM6765379
+keratinocytes	MPXV clade I infected	GSM6765393
+keratinocytes	MPXV clade I infected	GSM6765408
+
