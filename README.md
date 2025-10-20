@@ -1,19 +1,61 @@
 # Bulk_RNA_Seq_Analysis
 
-Reproducible repository for bulk RNA-seq analyses (colon organoids and keratinocyte cell lines).
+Reproducible repository for bulk RNA-seq analyses (colon organoids and keratinocyte cell lines) – from my undergrad 2nd-3rd year (2022-2023)
 
 ## Project summary
 This repository contains scripts, metadata, raw and processed count tables, and results for differential expression analyses and downstream visualizations. The recent reorganization added a recommended folder layout, helper files for reproducible environments, and a `.gitignore` tuned to ignore intermediate data files.
+
+## Repository Structure
+
+```
+.
+├── colon organoids/      # Analysis scripts and data for colon organoid experiments
+├── keratinocyte/         # Analysis scripts and data for keratinocyte cell lines
+├── pipeline/             # Reusable pipeline scripts for RNA-seq analysis
+├── data/                 # Raw and processed data files
+├── results/              # Output files from analyses
+├── scripts/             # Utility scripts and shared functions
+├── requirements.txt     # Python package dependencies
+└── R_requirements.R    # R package dependencies
+```
 
 ## From SRA / GEO FASTQ to gene-level counts (example)
 
 The following shell snippet shows a common end-to-end workflow: fetch FASTQ from SRA/GEO, optionally trim, align to a reference, and generate gene-level counts with `featureCounts`. There is an alternative Salmon (quasi-mapping) example included.
 
+
 ### Prerequisites
-- SRA Toolkit (prefetch, fasterq-dump)
-- fastp (optional, trimming)
-- HISAT2 or STAR (alignment) and samtools
-- subread (featureCounts) or Salmon (for quasi-mapping)
+- **Bash tools for FASTQ to counts:**
+	- SRA Toolkit (`prefetch`, `fasterq-dump`): download FASTQ from SRA/GEO
+	- FASTQC: quality control of raw FASTQ files
+	- fastp: trimming and filtering reads
+	- HISAT2 or STAR: alignment to reference genome
+	- samtools: BAM file manipulation
+	- subread (featureCounts): gene-level counting
+	- Salmon: fast transcript quantification (alignment-free)
+
+**Install commands (Ubuntu/Debian):**
+```bash
+sudo apt-get update
+sudo apt-get install fastqc hisat2 star samtools
+# SRA Toolkit
+conda install -c bioconda sra-tools
+# fastp
+conda install -c bioconda fastp
+# subread (featureCounts)
+conda install -c bioconda subread
+# Salmon
+conda install -c bioconda salmon
+```
+Or use [mamba](https://github.com/mamba-org/mamba) for faster conda installs.
+
+**Role in pipeline:**
+- FASTQC: run after download/trimming for QC reports
+- fastp: trim/filter before alignment
+- HISAT2/STAR: align reads to genome
+- samtools: sort/index BAM files
+- featureCounts: count reads per gene
+- Salmon: alternative quantification (transcript/gene)
 
 ### Example: end-to-end (HISAT2 + featureCounts)
 
@@ -142,8 +184,3 @@ This project uses the license in `LICENSE`. For questions, open an issue or cont
 
 ---
 
-Next steps I can take (choose one):
-- I can move all top-level CSV files into `data/raw/` and add `.gitignore` negation rules for any CSVs you want tracked.
-- I can create a small helper script that untracks existing CSVs and then re-adds a select set to be kept in Git.
-
-Tell me which you'd like and I'll continue.
