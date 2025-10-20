@@ -1,4 +1,4 @@
-## R package installer for this project
+## Bulk RNA-seq R package installer
 if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
@@ -25,4 +25,4 @@ bioc_pkgs <- c(
 )
 BiocManager::install(setdiff(bioc_pkgs, rownames(installed.packages())), ask = FALSE)
 
-message("R package installation completed. Restart R or RStudio if packages were updated.")
+message("Bulk RNA-seq R package installation completed.")
