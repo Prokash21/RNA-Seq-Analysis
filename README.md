@@ -180,7 +180,7 @@ Rscript scripts/my_analysis.R
 - Use branches for work and submit PRs with small, reviewable changes.
 
 ## License & contact
-This project uses the license in `LICENSE`. For questions, open an issue or contact the repository maintainer.
+This project uses the license in `LICENSE`. For questions, open an issue or contact me at [joy21.dev.pd@gmail.com](mailto:joy21.dev.pd@gmail.com).
 
 ---
 
