@@ -2,6 +2,36 @@
 # Simple pipeline to fetch SRA runs (via prefetch/fasterq-dump), trim, align (HISAT2) and count (featureCounts)
 # Usage: ./fetch_and_map.sh SRR22450503 /path/to/genome.fa /path/to/annotations.gtf /path/to/hisat2_index_prefix
 
+# --- Example: Real single-sample pipeline as used in this repository ---
+#
+# Change working directory to repo root
+cd "$(dirname "$0")/.."
+
+# STEP 1: Run FastQC on raw FASTQ
+fastqc data/demo.fastq -o data/
+
+# STEP 2: Trim reads with Trimmomatic
+java -jar tools/Trimmomatic-0.39/trimmomatic-0.39.jar SE -threads 4 data/demo.fastq data/demo_trimmed.fastq TRAILING:10 -phred33
+echo "Trimmomatic finished running!"
+
+# STEP 3: Run FastQC on trimmed FASTQ
+fastqc data/demo_trimmed.fastq -o data/
+
+# STEP 4: Run HISAT2 alignment
+# hisat2 index should be in results/HISAT2/grch38/genome
+hisat2 -q --rna-strandness R -x results/HISAT2/grch38/genome -U data/demo_trimmed.fastq | samtools sort -o results/HISAT2/demo_trimmed.bam
+echo "HISAT2 finished running!"
+
+# STEP 5: Run featureCounts quantification
+# GTF annotation should be in reference/hg38/Homo_sapiens.GRCh38.106.gtf
+featureCounts -S 2 -a reference/hg38/Homo_sapiens.GRCh38.106.gtf -o results/quants/demo_featurecounts.txt results/HISAT2/demo_trimmed.bam
+echo "featureCounts finished running!"
+
+# Time summary
+duration=$SECONDS
+echo "$((duration / 60)) minutes and $((duration % 60)) seconds elapsed."
+# --- End of example block ---
+
 #!/usr/bin/env bash
 # Real analysis pipeline: batch SRA/FASTQ processing, auto-detect paired/single-end, log summary
 
