@@ -22,6 +22,10 @@ TestResults.xml
 # --- Data files ---
 *.csv
 
+# Ignore compressed and intermediate FASTQ files
+*.gz
+*.fastq1
+
 # Common R artifacts
 .Rhistory
 .RData
